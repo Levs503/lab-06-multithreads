@@ -23,15 +23,15 @@ string(APPEND CMAKE_CXX_FLAGS " -pedantic -Werror -Wall -Wextra")
 string(APPEND CMAKE_CXX_FLAGS " -Wno-unused-command-line-argument")
 string(APPEND CMAKE_CXX_FLAGS " -Wshadow -Wnon-virtual-dtor")
 
-hunter_add_package(Boost COMPONENTS log)
-find_package(Boost CONFIG REQUIRED log)
+hunter_add_package(Boost COMPONENTS log thread)
+find_package(Boost CONFIG REQUIRED log thread)
 hunter_add_package(GTest)
 find_package(GTest CONFIG REQUIRED)
 
 add_library(lab-06-multithreads STATIC
   # enum your files and delete this comment
   ${CMAKE_CURRENT_SOURCE_DIR}/sources/main.cpp
-)
+        sources/HashWorker.cpp include/HashWorker.h)
 add_executable(tests
   ${CMAKE_CURRENT_SOURCE_DIR}/tests/test.cpp
 )
@@ -39,7 +39,10 @@ add_executable(tests
 add_executable(main
         ${CMAKE_CURRENT_SOURCE_DIR}/sources/main.cpp)
 
-target_include_directories(lab-06-multithreads
+target_link_libraries(tests Boost::log Boost::thread)
+target_link_libraries(main Boost::log Boost::thread)
+
+        target_include_directories(lab-06-multithreads
   PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 target_include_directories(tests

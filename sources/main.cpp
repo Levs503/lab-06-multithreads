@@ -3,9 +3,19 @@
 //
 #include <picosha2.h>
 #include<iostream>
-#include<thread>
+#include "HashWorker.h"
+#include <boost/thread.hpp>
+
+
 
 int main(){
-  std::cout<<"sadfg";
-  std::cout<<std::thread::hardware_concurrency();
+
+  std::vector<boost::thread> threads;
+
+  for(size_t g =0; g<12; g++){
+    threads.emplace_back(FindHash);
+  }
+  for(size_t g =0; g<12; g++){
+    threads[g].join();
+  }
 }
