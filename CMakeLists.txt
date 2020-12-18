@@ -38,7 +38,7 @@ add_executable(tests
 
 add_executable(main
         ${CMAKE_CURRENT_SOURCE_DIR}/sources/main.cpp)
-
+target_link_libraries(lab-06-multithreads  Boost::log Boost::thread)
 target_link_libraries(tests Boost::log Boost::thread)
 target_link_libraries(main Boost::log Boost::thread)
 
